@@ -812,17 +812,33 @@ Hello world!
         Get started in seconds
       </p>
       <p class="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-        First manually change your <code class="bg-gray-100 px-2 py-1">composer.json</code> to include these lines:
+        We can start by taking a look at a simple example application. 
+        You can use this example to get started by creating a new <code>public/</code> directory with an <code>index.php</code> file inside:
       </p>
     </div>
-<pre class="text-left mt-12 col-span-full shadow-2xl"><code class="php rounded-md">{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/clue-access/framework-x"
-        }
-    ]
-}
+<pre class="text-left mt-12 col-span-full shadow-2xl"><code class="php rounded-md">?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$app = new FrameworkX\App();
+
+$app->get('/', function () {
+    return new React\Http\Message\Response(
+        200,
+        [],
+        "Hello wörld!\n"
+    );
+});
+
+$app->get('/users/{name}', function (Psr\Http\Message\ServerRequestInterface $request) {
+    return new React\Http\Message\Response(
+        200,
+        [],
+        "Hello " . $request->getAttribute('name') . "!\n"
+    );
+});
+
+$app->run();
 </code></pre> 
   </div>
 </section>
@@ -834,6 +850,16 @@ Hello world!
     </p>
   </div>
 <pre class="text-left mt-12 col-span-full shadow-2xl"><code class="php rounded-md">$ composer require clue/framework-x:dev-main
+</code></pre> 
+</section>
+
+<section class="mx-auto max-w-md px-4 text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
+  <div>
+    <p class="mt-20 mb-10 max-w-prose mx-auto text-xl text-gray-500">
+      You can run the above example using the built-in web server like this:
+    </p>
+  </div>
+<pre class="text-left mt-12 col-span-full shadow-2xl"><code class="php rounded-md">$ php public/index.php
 </code></pre> 
   <div>
     <p class="mt-10 mb-10 max-w-prose mx-auto text-xl text-gray-500">
